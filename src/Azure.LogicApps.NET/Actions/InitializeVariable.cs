@@ -1,54 +1,25 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
-using Azure.LogicApps.NET.Base;
+﻿using Azure.LogicApps.NET.Base;
 using Azure.LogicApps.NET.Constants;
 
 namespace Azure.LogicApps.NET.Actions;
 
 public class InitializeVariable : WorkflowActionBase
 {
-	public string Name { get; set; }
+	public override string Type => ActionType.InitializeVariable;
 
-	public string Type { get; set; }
+	public Input Inputs { get; set; }
 
-	public object Value { get; set; }
-
-	public override JsonNode ToWorkflowTemplate()
+	public class Input
 	{
-		JsonObject jsonObject = new JsonObject
-		{
-			["type"] = ActionType.InitializeVariable,
-			["inputs"] = new JsonObject
-			{
-				["variables"] = new JsonArray
-				{
-					new JsonObject
-					{
-						["name"] = Name,
-						["type"] = Type,
-						["value"] = Type switch
-						{
-							VariableDataType.String => Value.ToString(),
-							VariableDataType.Integer => int.Parse(Value.ToString()),
-							VariableDataType.Boolean => bool.Parse(Value.ToString()),
-							VariableDataType.Float => float.Parse(Value.ToString()),
-							VariableDataType.Object or VariableDataType.Array => JsonValue.Parse(JsonSerializer.Serialize(Value)),
-							_ => throw new ArgumentOutOfRangeException()
-						}
-					}
-				}
-			},
-			["runAfter"] = new JsonObject()
-		};
+		public List<Variable> Variables { get; set; }
+	}
 
-		if (RunAfter?.Actions.Any() == true)
-		{
-			foreach (var item in RunAfter.Actions)
-			{
-				jsonObject["runAfter"][item.Key] = JsonNode.Parse(JsonSerializer.Serialize(item.Value));
-			}
-		}
+	public class Variable
+	{
+		public string Name { get; set; }
 
-		return jsonObject;
+		public string Type { get; set; }
+
+		public object Value { get; set; }
 	}
 }

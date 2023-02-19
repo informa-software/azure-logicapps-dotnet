@@ -10,19 +10,4 @@ public class RequestTrigger : WorkflowTriggerBase
 	public new string Type { get; } = "Request";
 
 	public JsonObject Inputs { get; set; }
-
-	public override JsonNode ToWorkflowTemplate()
-	{
-		JsonObject jsonObject = new JsonObject
-		{
-			["kind"] = Kind,
-			["type"] = Type,
-			["inputs"] = new JsonObject
-			{
-				["schema"] = new JsonObject()
-			}
-		};
-
-		return jsonObject;
-	}
 }

@@ -1,35 +1,18 @@
 ﻿using Azure.LogicApps.NET.Actions;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Azure.LogicApps.NET.Base;
 
-[JsonDerivedType(typeof(InitializeVariable))]
-[JsonDerivedType(typeof(SetVariable))]
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(InitializeVariable), typeDiscriminator: nameof(InitializeVariable))]
+[JsonDerivedType(typeof(SetVariable), typeDiscriminator: nameof(SetVariable))]
+[JsonDerivedType(typeof(IfCondition), typeDiscriminator: "If")]
 public abstract class WorkflowActionBase
 {
 	public required string ActionIdentifier { get; set; }
 
-	public RunAfter RunAfter { get; set; }
+	public abstract string Type { get; }
 
-	public abstract JsonNode ToWorkflowTemplate();
-
-	public string ToWorkflowTemplateJsonString()
-	{
-		var jsonSerializerOptions = new JsonSerializerOptions
-		{
-			WriteIndented = true,
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-		};
-
-		return ToWorkflowTemplateJsonString(jsonSerializerOptions);
-	}
-
-	public string ToWorkflowTemplateJsonString(JsonSerializerOptions jsonSerializerOptions)
-	{
-		JsonNode workflowTemplate = ToWorkflowTemplate();
-		string jsonString = JsonSerializer.Serialize(workflowTemplate, jsonSerializerOptions);
-		return jsonString;
-	}
+	public Dictionary<string, List<string>> RunAfter { get; set; } = new Dictionary<string, List<string>>();
 }
