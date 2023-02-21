@@ -44,7 +44,7 @@ public class WorkflowActionJsonConverter : JsonConverterFactory
 								if(propertyInfo.Name == actionIdentifierPropertyName)
 								{
 									propertyInfo.IsRequired = false;
-								}
+							}
 							}
 
 							if (jsonTypeInfo.Type != typeof(WorkflowActionBase))
@@ -63,6 +63,7 @@ public class WorkflowActionJsonConverter : JsonConverterFactory
 									new JsonDerivedType(typeof(SetVariable), ActionType.SetVariable),
 									new JsonDerivedType(typeof(IfCondition), ActionType.If),
 									new JsonDerivedType(typeof(SwitchCondition), ActionType.Switch),
+									new JsonDerivedType(typeof(Until), "Until"),
 								}
 							};
 						}

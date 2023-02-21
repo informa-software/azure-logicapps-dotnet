@@ -127,6 +127,41 @@ public class WorkflowDeserializerTests
                         "Succeeded"
                       ]
                     }
+                  },
+                  "Until1": {
+                    "type": "Until",
+                    "actions": {
+                      "Set_Variable6": {
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "name",
+                          "value": "Jane Bloggs"
+                        },
+                        "runAfter": {}
+                      },
+                      "Set_Variable7": {
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "name",
+                          "value": "Joe Bloggs"
+                        },
+                        "runAfter": {
+                          "Set_Variable6": [
+                            "Succeeded"
+                          ]
+                        }
+                      }
+                    },
+                    "expression": "@equals(variables(\u0027name\u0027), \u0027Hello\u0027)",
+                    "limit": {
+                      "count": 60,
+                      "timeout": "PT1H"
+                    },
+                    "runAfter": {
+                      "SomeCondition": [
+                        "Succeeded"
+                      ]
+                    }
                   }
                 },
                 "triggers": {
@@ -152,9 +187,14 @@ public class WorkflowDeserializerTests
 	{
 		foreach (KeyValuePair<string, WorkflowActionBase> item in workflowAction)
 		{
-			if (item.Value is IfCondition condition)
+			if (item.Value is IfCondition ifCondition)
 			{
-				return IsWorkflowActionIdentifierPopulatedWithCorrectValue(condition.Actions);
+				return IsWorkflowActionIdentifierPopulatedWithCorrectValue(ifCondition.Actions);
+			}
+
+			if (item.Value is Until untilCondition)
+			{
+				return IsWorkflowActionIdentifierPopulatedWithCorrectValue(untilCondition.Actions);
 			}
 
 			if (item.Value.ActionIdentifier != item.Key)

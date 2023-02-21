@@ -245,6 +245,43 @@ WorkflowDefinition workflowDefinition = new WorkflowDefinitionBuilder()
 			},
 		}
 	})
+	.AddAction("Switch_Condition1", new Until
+	{
+		ActionIdentifier = "Until1",
+		Actions = new Dictionary<string, WorkflowActionBase>
+		{
+			{ "Set_Variable6", new SetVariable
+				{
+					ActionIdentifier = "Set_Variable6",
+					Inputs = new SetVariable.Variable
+					{
+						Name = "name",
+						Value = "Jane Bloggs"
+					}
+				}
+			},
+			{ "Set_Variable7", new SetVariable
+				{
+					ActionIdentifier = "Set_Variable7",
+					Inputs = new SetVariable.Variable
+					{
+						Name = "name",
+						Value = "Joe Bloggs"
+					},
+					RunAfter = new Dictionary<string, List<string>> 
+					{ 
+						{ "Set_Variable6", new List<string> { "Succeeded" } } 
+					}
+				}
+			}
+		},
+		Expression = "@equals(variables('name'), 'Hello')",
+		Limit = new Until.UntilLimit
+		{
+			Count = 60,
+			Timeout = "PT1H"
+		}
+	})
 	.Build();
 
 Workflow workflow = new WorkflowBuilder()

@@ -151,6 +151,43 @@ public class WorkflowSerializerTests
 				}
 			})
 			.AddAction("Set_Variable1", ifCondition)
+			.AddAction(ifCondition.ActionIdentifier, new Until
+			{
+				ActionIdentifier = "Until1",
+				Actions = new Dictionary<string, WorkflowActionBase>
+				{
+					{ "Set_Variable6", new SetVariable
+						{
+							ActionIdentifier = "Set_Variable6",
+							Inputs = new SetVariable.Variable
+							{
+								Name = "name",
+								Value = "Jane Bloggs"
+							}
+						}
+					},
+					{ "Set_Variable7", new SetVariable
+						{
+							ActionIdentifier = "Set_Variable7",
+							Inputs = new SetVariable.Variable
+							{
+								Name = "name",
+								Value = "Joe Bloggs"
+							},
+							RunAfter = new Dictionary<string, List<string>>
+							{
+								{ "Set_Variable6", new List<string> { "Succeeded" } }
+							}
+						}
+					}
+				},
+				Expression = "@equals(variables('name'), 'Hello')",
+				Limit = new Until.UntilLimit
+				{
+					Count = 60,
+					Timeout = "PT1H"
+				}
+			})
 			.Build();
 
 		Workflow workflow = new WorkflowBuilder()
@@ -276,6 +313,41 @@ public class WorkflowSerializerTests
                     },
                     "runAfter": {
                       "Set_Variable1": [
+                        "Succeeded"
+                      ]
+                    }
+                  },
+                  "Until1": {
+                    "type": "Until",
+                    "actions": {
+                      "Set_Variable6": {
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "name",
+                          "value": "Jane Bloggs"
+                        },
+                        "runAfter": {}
+                      },
+                      "Set_Variable7": {
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "name",
+                          "value": "Joe Bloggs"
+                        },
+                        "runAfter": {
+                          "Set_Variable6": [
+                            "Succeeded"
+                          ]
+                        }
+                      }
+                    },
+                    "expression": "@equals(variables(\u0027name\u0027), \u0027Hello\u0027)",
+                    "limit": {
+                      "count": 60,
+                      "timeout": "PT1H"
+                    },
+                    "runAfter": {
+                      "SomeCondition": [
                         "Succeeded"
                       ]
                     }
