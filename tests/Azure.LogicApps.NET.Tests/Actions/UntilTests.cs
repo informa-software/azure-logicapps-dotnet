@@ -8,7 +8,7 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class UntilTests
 {
 	[Fact]
-	public void ToJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
 		Until until = new Until
 		{
@@ -48,7 +48,7 @@ public class UntilTests
 			}
 		};
 
-		var actualJsonString = until.ToJsonString();
+		var actualJsonString = until.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

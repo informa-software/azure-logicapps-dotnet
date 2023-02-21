@@ -11,7 +11,7 @@ namespace Azure.LogicApps.NET.Tests;
 public class WorkflowSerializerTests
 {
 	[Fact]
-	public void ToJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
 		IfCondition ifCondition = new IfCondition
 		{
@@ -195,7 +195,7 @@ public class WorkflowSerializerTests
 			.WithDefinition(workflowDefinition)
 			.Build();
 
-		var actualJsonString = workflow.ToJsonString();
+		var actualJsonString = workflow.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

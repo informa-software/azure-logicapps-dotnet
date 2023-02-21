@@ -2,7 +2,7 @@
 
 public interface IWorkflowItem<T>
 {
-	static abstract T FromJsonString(string value);
+	static abstract T FromWorkflowJsonString(string value);
 
-	string ToJsonString();
+	string ToWorkflowJsonString();
 }

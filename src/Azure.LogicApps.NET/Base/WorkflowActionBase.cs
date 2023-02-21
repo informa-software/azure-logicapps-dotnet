@@ -9,7 +9,7 @@ public abstract class WorkflowActionBase : IWorkflowItem<WorkflowActionBase>
 
 	public Dictionary<string, List<string>> RunAfter { get; set; } = new Dictionary<string, List<string>>();
 
-	public static WorkflowActionBase FromJsonString(string jsonString)
+	public static WorkflowActionBase FromWorkflowJsonString(string jsonString)
 	{
 		JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
 		{
@@ -23,7 +23,7 @@ public abstract class WorkflowActionBase : IWorkflowItem<WorkflowActionBase>
 		return JsonSerializer.Deserialize<WorkflowActionBase>(jsonString, jsonSerializerOptions);
 	}
 
-	public virtual string ToJsonString()
+	public virtual string ToWorkflowJsonString()
 	{
 		JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
 		{

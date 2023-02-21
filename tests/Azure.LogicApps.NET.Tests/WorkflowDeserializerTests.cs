@@ -7,7 +7,7 @@ namespace Azure.LogicApps.NET.Tests;
 public class WorkflowDeserializerTests
 {
 	[Fact]
-	public void FromJsonString_PopulatesCorrectionObject()
+	public void FromWorkflowJsonString_PopulatesCorrectionObject()
 	{
 		string jsonString =
 			"""
@@ -178,7 +178,7 @@ public class WorkflowDeserializerTests
             }
             """;
 
-		Workflow workflow = Workflow.FromJsonString(jsonString);
+		Workflow workflow = Workflow.FromWorkflowJsonString(jsonString);
 		bool isWorkflowActionIdentifierPopulatedWithCorrectValue = IsWorkflowActionIdentifierPopulatedWithCorrectValue(workflow.Definition.Actions);
 		isWorkflowActionIdentifierPopulatedWithCorrectValue.Should().BeTrue();
 	}

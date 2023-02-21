@@ -8,12 +8,12 @@ public class Until : WorkflowActionBase
 
 	public string Expression { get; set; }
 
-    public UntilLimit Limit { get; set; }
+	public UntilLimit Limit { get; set; }
 
-    public class UntilLimit
+	public class UntilLimit
 	{
-        public int Count { get; set; }
+		public int Count { get; set; }
 
-        public string Timeout { get; set; }
-    }
+		public string Timeout { get; set; }
+	}
 }

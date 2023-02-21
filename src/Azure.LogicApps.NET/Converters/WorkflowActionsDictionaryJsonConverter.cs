@@ -1,7 +1,6 @@
 ﻿using Azure.LogicApps.NET.Base;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
 
 namespace Azure.LogicApps.NET.Converters;
 

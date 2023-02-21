@@ -12,7 +12,7 @@ public class Workflow : IWorkflowItem<Workflow>
 
 	public WorkflowKind Kind { get; set; }
 
-	public static Workflow FromJsonString(string jsonString)
+	public static Workflow FromWorkflowJsonString(string jsonString)
 	{
 		JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
 		{
@@ -27,7 +27,7 @@ public class Workflow : IWorkflowItem<Workflow>
 		return JsonSerializer.Deserialize<Workflow>(jsonString, jsonSerializerOptions);
 	}
 
-	public virtual string ToJsonString()
+	public virtual string ToWorkflowJsonString()
 	{
 		JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
 		{

@@ -8,7 +8,7 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class IfConditionTests
 {
 	[Fact]
-	public void ToJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
 		IfCondition ifCondition = new IfCondition
 		{
@@ -60,7 +60,7 @@ public class IfConditionTests
 			}
 		};
 
-		var actualJsonString = ifCondition.ToJsonString();
+		var actualJsonString = ifCondition.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

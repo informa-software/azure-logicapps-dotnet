@@ -8,7 +8,7 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class InitializeVariableTests
 {
 	[Fact]
-	public void ToJsonString_WhenTypeIsString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_WhenTypeIsString_PopulatesCorrectionJson()
 	{
 		InitializeVariable initializeVariable = new InitializeVariable
 		{
@@ -27,7 +27,7 @@ public class InitializeVariableTests
 			}
 		};
 
-		var actualJsonString = initializeVariable.ToJsonString();
+		var actualJsonString = initializeVariable.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =
@@ -52,7 +52,7 @@ public class InitializeVariableTests
 	}
 
 	[Fact]
-	public void ToJsonString_WhenTypeIsObject_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_WhenTypeIsObject_PopulatesCorrectionJson()
 	{
 		InitializeVariable initializeVariable = new InitializeVariable
 		{
@@ -75,7 +75,7 @@ public class InitializeVariableTests
 			}
 		};
 
-		var actualJsonString = initializeVariable.ToJsonString();
+		var actualJsonString = initializeVariable.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

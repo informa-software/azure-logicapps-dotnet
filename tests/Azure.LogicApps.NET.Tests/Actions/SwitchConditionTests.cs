@@ -8,11 +8,11 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class SwitchConditionTests
 {
 	[Fact]
-	public void ToJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
 		SwitchCondition switchCondition = new SwitchCondition
 		{
-			ActionIdentifier = "Switch_Condition1",
+			ActionIdentifier = "Switch_Condition",
 			Expression = "@variables('name')",
 			Cases = new Dictionary<string, SwitchCondition.SwitchCaseStatement>
 			{
@@ -113,7 +113,7 @@ public class SwitchConditionTests
 			}
 		};
 
-		var actualJsonString = switchCondition.ToJsonString();
+		var actualJsonString = switchCondition.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

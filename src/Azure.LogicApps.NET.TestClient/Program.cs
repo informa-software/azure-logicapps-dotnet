@@ -268,9 +268,9 @@ WorkflowDefinition workflowDefinition = new WorkflowDefinitionBuilder()
 						Name = "name",
 						Value = "Joe Bloggs"
 					},
-					RunAfter = new Dictionary<string, List<string>> 
-					{ 
-						{ "Set_Variable6", new List<string> { "Succeeded" } } 
+					RunAfter = new Dictionary<string, List<string>>
+					{
+						{ "Set_Variable6", new List<string> { "Succeeded" } }
 					}
 				}
 			}
@@ -289,14 +289,14 @@ Workflow workflow = new WorkflowBuilder()
 	.WithDefinition(workflowDefinition)
 	.Build();
 
-string jsonString = workflow.ToJsonString();
+string jsonString = workflow.ToWorkflowJsonString();
 Console.WriteLine("--------------------------------------");
 Console.WriteLine(jsonString);
 Console.WriteLine("--------------------------------------");
 
-Workflow parsedWorkflow = Workflow.FromJsonString(jsonString);
+Workflow parsedWorkflow = Workflow.FromWorkflowJsonString(jsonString);
 Console.WriteLine("--------------------------------------");
-jsonString = parsedWorkflow.ToJsonString();
+jsonString = parsedWorkflow.ToWorkflowJsonString();
 Console.WriteLine("--------------------------------------");
 
 Console.WriteLine(jsonString);
