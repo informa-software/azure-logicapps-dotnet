@@ -143,6 +143,108 @@ WorkflowDefinition workflowDefinition = new WorkflowDefinitionBuilder()
 		}
 	})
 	.AddAction("Set_Variable1", ifCondition)
+	.AddAction(ifCondition.ActionIdentifier, new SwitchCondition
+	{
+		ActionIdentifier = "Switch_Condition1",
+		Expression = "@variables('name')",
+		Cases = new Dictionary<string, SwitchCondition.SwitchCaseStatement>
+		{
+			{
+				"Case_1", new SwitchCondition.SwitchCaseStatement
+				{
+					Actions = new Dictionary<string, WorkflowActionBase>
+					{
+						{ "SomeOtherCondition1", new IfCondition
+							{
+								ActionIdentifier = "SomeOtherCondition1",
+								Actions = new Dictionary<string, WorkflowActionBase>
+								{
+									{ "Set_Variable41", new SetVariable
+										{
+											ActionIdentifier = "Set_Variable41",
+											Inputs = new SetVariable.Variable
+											{
+												Name = "name",
+												Value = "Fred Bloggs"
+											}
+										}
+									}
+								},
+								Expression = new IfCondition.ConditionExpression
+								{
+									{ "and", new List<Dictionary<string, List<string>>>
+										{
+											new Dictionary<string, List<string>>
+											{
+												{ "equals", new List<string>
+													{
+														"@variables('name')",
+														"hello"
+													}
+												}
+											}
+										}
+									}
+								},
+								Else = new IfCondition.ElseStatement
+								{
+									Actions = new Dictionary<string, WorkflowActionBase>
+									{
+										{ "Set_Variable51", new SetVariable
+											{
+												ActionIdentifier = "Set_Variable51",
+												Inputs = new SetVariable.Variable
+												{
+													Name = "name",
+													Value = "Joe Bloggs"
+												}
+											}
+										}
+									},
+								}
+							}
+						}
+					},
+					Case = "A",
+				}
+			},
+			{
+				"Case_2", new SwitchCondition.SwitchCaseStatement
+				{
+					Actions = new Dictionary<string, WorkflowActionBase>
+					{
+						{ "Set_Variable9", new SetVariable
+							{
+								ActionIdentifier = "Set_Variable9",
+								Inputs = new SetVariable.Variable
+								{
+									Name = "name",
+									Value = "Joe Bloggs"
+								}
+							}
+						}
+					},
+					Case = "B",
+				}
+			}
+		},
+		Default = new SwitchCondition.SwitchDefaultCaseStatement
+		{
+			Actions = new Dictionary<string, WorkflowActionBase>
+			{
+				{ "Set_Variable10", new SetVariable
+					{
+						ActionIdentifier = "Set_Variable10",
+						Inputs = new SetVariable.Variable
+						{
+							Name = "name",
+							Value = "Joe Bloggs"
+						}
+					}
+				}
+			},
+		}
+	})
 	.Build();
 
 Workflow workflow = new WorkflowBuilder()

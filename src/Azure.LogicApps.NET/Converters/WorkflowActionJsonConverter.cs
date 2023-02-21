@@ -62,6 +62,7 @@ public class WorkflowActionJsonConverter : JsonConverterFactory
 									new JsonDerivedType(typeof(InitializeVariable), ActionType.InitializeVariable),
 									new JsonDerivedType(typeof(SetVariable), ActionType.SetVariable),
 									new JsonDerivedType(typeof(IfCondition), ActionType.If),
+									new JsonDerivedType(typeof(SwitchCondition), ActionType.Switch),
 								}
 							};
 						}
