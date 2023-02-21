@@ -4,8 +4,6 @@ using Azure.LogicApps.NET.Base;
 using Azure.LogicApps.NET.Builders;
 using Azure.LogicApps.NET.Constants;
 using Azure.LogicApps.NET.Triggers;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 IfCondition ifCondition = new IfCondition
 {
@@ -43,13 +41,53 @@ IfCondition ifCondition = new IfCondition
 	{
 		Actions = new Dictionary<string, WorkflowActionBase>
 		{
-			{ "Set_Variable3", new SetVariable
+			{ "SomeOtherCondition", new IfCondition
 				{
-					ActionIdentifier = "Set_Variable3",
-					Inputs = new SetVariable.Variable
+					ActionIdentifier = "SomeOtherCondition",
+					Actions = new Dictionary<string, WorkflowActionBase>
 					{
-						Name = "name",
-						Value = "Joe Bloggs"
+						{ "Set_Variable4", new SetVariable
+							{
+								ActionIdentifier = "Set_Variable4",
+								Inputs = new SetVariable.Variable
+								{
+									Name = "name",
+									Value = "Fred Bloggs"
+								}
+							}
+						}
+					},
+					Expression = new IfCondition.ConditionExpression
+					{
+						{ "and", new List<Dictionary<string, List<string>>>
+							{
+								new Dictionary<string, List<string>>
+								{
+									{ "equals", new List<string>
+										{
+											"@variables('name')",
+											"hello"
+										}
+									}
+								}
+							}
+						}
+					},
+					Else = new IfCondition.ElseStatement
+					{
+						Actions = new Dictionary<string, WorkflowActionBase>
+						{
+							{ "Set_Variable5", new SetVariable
+								{
+									ActionIdentifier = "Set_Variable5",
+									Inputs = new SetVariable.Variable
+									{
+										Name = "name",
+										Value = "Joe Bloggs"
+									}
+								}
+							}
+						},
 					}
 				}
 			}
@@ -112,23 +150,15 @@ Workflow workflow = new WorkflowBuilder()
 	.WithDefinition(workflowDefinition)
 	.Build();
 
-var jsonSerializerOptions = new JsonSerializerOptions
-{
-	WriteIndented = true,
-	PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-	PropertyNameCaseInsensitive = true,
-	Converters =
-	{
-		new JsonStringEnumConverter()
-	},
-};
+string jsonString = workflow.ToJsonString();
+Console.WriteLine("--------------------------------------");
+Console.WriteLine(jsonString);
+Console.WriteLine("--------------------------------------");
 
-string jsonString = JsonSerializer.Serialize(workflow, jsonSerializerOptions);
-
-//Console.WriteLine(jsonString);
-
-Workflow parsedWorkflow = JsonSerializer.Deserialize<Workflow>(jsonString, jsonSerializerOptions);
-jsonString = JsonSerializer.Serialize(parsedWorkflow, jsonSerializerOptions);
+Workflow parsedWorkflow = Workflow.FromJsonString(jsonString);
+Console.WriteLine("--------------------------------------");
+jsonString = parsedWorkflow.ToJsonString();
+Console.WriteLine("--------------------------------------");
 
 Console.WriteLine(jsonString);
 

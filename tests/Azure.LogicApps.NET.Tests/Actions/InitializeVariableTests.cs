@@ -1,6 +1,6 @@
-using FluentAssertions;
 using Azure.LogicApps.NET.Actions;
 using Azure.LogicApps.NET.Constants;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
 
 namespace Azure.LogicApps.NET.Tests.Actions;
@@ -8,8 +8,28 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class InitializeVariableTests
 {
 	[Fact]
-	public void InitializeVariable_WhenTypeIsString_PopulatesCorrectionJson()
+	public void ToJsonString_WhenTypeIsString_PopulatesCorrectionJson()
 	{
+		InitializeVariable initializeVariable = new InitializeVariable
+		{
+			ActionIdentifier = "Initialize_variable",
+			Inputs = new InitializeVariable.Input
+			{
+				Variables = new List<InitializeVariable.Variable>
+				{
+					new InitializeVariable.Variable
+					{
+						Name = "strVariable1",
+						Type = VariableDataType.String,
+						Value = "Hello World"
+					}
+				}
+			}
+		};
+
+		var actualJsonString = initializeVariable.ToJsonString();
+		var actualJObject = JObject.Parse(actualJsonString);
+
 		string expectedJsonString =
 			"""
             {
@@ -28,22 +48,36 @@ public class InitializeVariableTests
             """;
 		var expectedJObject = JObject.Parse(expectedJsonString);
 
-		InitializeVariable initializeVariable = new InitializeVariable
-		{
-			ActionIdentifier = "Initialize_variable",
-			Name = "strVariable1",
-			Type = VariableDataType.String,
-			Value = "Hello World"
-		};
-		var actualJsonString = initializeVariable.ToWorkflowTemplateJsonString();
-		var actualJObject = JObject.Parse(actualJsonString);
-
 		JToken.DeepEquals(actualJObject, expectedJObject).Should().BeTrue();
 	}
 
 	[Fact]
-	public void InitializeVariable_WhenTypeIsObject_PopulatesCorrectionJson()
+	public void ToJsonString_WhenTypeIsObject_PopulatesCorrectionJson()
 	{
+		InitializeVariable initializeVariable = new InitializeVariable
+		{
+			ActionIdentifier = "Initialize_variable",
+			Inputs = new InitializeVariable.Input
+			{
+				Variables = new List<InitializeVariable.Variable>
+				{
+					new InitializeVariable.Variable
+					{
+						Name = "objVariable1",
+						Type = VariableDataType.Object,
+						Value = new
+						{
+							FirstName = "John",
+							LastName = "Doe"
+						}
+					}
+				}
+			}
+		};
+
+		var actualJsonString = initializeVariable.ToJsonString();
+		var actualJObject = JObject.Parse(actualJsonString);
+
 		string expectedJsonString =
 			"""
 			{
@@ -64,20 +98,6 @@ public class InitializeVariableTests
 			}
 			""";
 		var expectedJObject = JObject.Parse(expectedJsonString);
-
-		InitializeVariable initializeVariable = new InitializeVariable
-		{
-			ActionIdentifier = "Initialize_variable",
-			Name = "objVariable1",
-			Type = VariableDataType.Object,
-			Value = new
-			{
-				firstName = "John",
-				lastName = "Doe",
-			}
-		};
-		var actualJsonString = initializeVariable.ToWorkflowTemplateJsonString();
-		var actualJObject = JObject.Parse(actualJsonString);
 
 		JToken.DeepEquals(actualJObject, expectedJObject).Should().BeTrue();
 	}

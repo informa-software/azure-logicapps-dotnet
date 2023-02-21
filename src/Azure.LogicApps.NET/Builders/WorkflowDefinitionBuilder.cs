@@ -32,6 +32,18 @@ public class WorkflowDefinitionBuilder : IWorkflowDefinitionBuilder
 		return this;
 	}
 
+	public IWorkflowDefinitionBuilder AddActions(Dictionary<string, WorkflowActionBase> actions)
+	{
+		ArgumentNullException.ThrowIfNull(actions);
+
+		foreach (KeyValuePair<string, WorkflowActionBase> action in actions)
+		{
+			AddAction(action.Value);
+		}
+
+		return this;
+	}
+
 	public IWorkflowDefinitionBuilder AddAction(string previousActionIdentifier, WorkflowActionBase action)
 	{
 		ArgumentException.ThrowIfNullOrEmpty(previousActionIdentifier);

@@ -8,6 +8,8 @@ public interface IWorkflowDefinitionBuilder
 
 	IWorkflowDefinitionBuilder AddAction(WorkflowActionBase action);
 
+	IWorkflowDefinitionBuilder AddActions(Dictionary<string, WorkflowActionBase> actions);
+
 	IWorkflowDefinitionBuilder AddAction(string previousActionIdentifier, WorkflowActionBase action);
 
 	WorkflowDefinition Build();

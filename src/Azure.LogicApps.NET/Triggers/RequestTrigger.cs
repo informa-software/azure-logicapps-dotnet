@@ -1,5 +1,5 @@
-﻿using System.Text.Json.Nodes;
-using Azure.LogicApps.NET.Base;
+﻿using Azure.LogicApps.NET.Base;
+using System.Text.Json.Nodes;
 
 namespace Azure.LogicApps.NET.Triggers;
 

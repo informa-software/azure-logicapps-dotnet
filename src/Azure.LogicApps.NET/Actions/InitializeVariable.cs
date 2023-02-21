@@ -1,12 +1,9 @@
 ﻿using Azure.LogicApps.NET.Base;
-using Azure.LogicApps.NET.Constants;
 
 namespace Azure.LogicApps.NET.Actions;
 
 public class InitializeVariable : WorkflowActionBase
 {
-	public override string Type => ActionType.InitializeVariable;
-
 	public Input Inputs { get; set; }
 
 	public class Input
