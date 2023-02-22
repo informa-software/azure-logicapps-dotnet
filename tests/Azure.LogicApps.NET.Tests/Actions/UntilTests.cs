@@ -10,7 +10,7 @@ public class UntilTests
 	[Fact]
 	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
-		Until until = new Until
+		Until action = new Until
 		{
 			ActionIdentifier = "Until",
 			Actions = new Dictionary<string, WorkflowActionBase>
@@ -48,7 +48,7 @@ public class UntilTests
 			}
 		};
 
-		var actualJsonString = until.ToWorkflowJsonString();
+		var actualJsonString = action.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

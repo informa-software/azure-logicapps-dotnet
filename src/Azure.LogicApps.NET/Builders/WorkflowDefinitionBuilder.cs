@@ -30,6 +30,15 @@ public class WorkflowDefinitionBuilder : IWorkflowDefinitionBuilder
 		ArgumentNullException.ThrowIfNull(action);
 
 		_workflowDefinition.Actions ??= new Dictionary<string, WorkflowActionBase>();
+
+		if (_workflowDefinition.Actions.Any() && !action.RunAfter.Any())
+		{
+			action.RunAfter = new Dictionary<string, List<string>>
+			{
+				{ _workflowDefinition.Actions.Last().Key, new List<string> { ActionRunStatus.Succeeded } }
+			};
+		}
+
 		_workflowDefinition.Actions.Add(action.ActionIdentifier, action);
 
 		return this;
