@@ -1,4 +1,5 @@
 ﻿using Azure.LogicApps.NET.Base;
+using Azure.LogicApps.NET.Constants;
 using Azure.LogicApps.NET.Triggers;
 
 namespace Azure.LogicApps.NET.Builders;
@@ -14,6 +15,8 @@ public class WorkflowDefinitionBuilder : IWorkflowDefinitionBuilder
 
 	public IWorkflowDefinitionBuilder WithTrigger(WorkflowTriggerBase trigger)
 	{
+		ArgumentNullException.ThrowIfNull(trigger);
+
 		_workflowDefinition.Triggers = new WorkflowTriggers
 		{
 			Manual = trigger
@@ -47,10 +50,11 @@ public class WorkflowDefinitionBuilder : IWorkflowDefinitionBuilder
 	public IWorkflowDefinitionBuilder AddAction(string previousActionIdentifier, WorkflowActionBase action)
 	{
 		ArgumentException.ThrowIfNullOrEmpty(previousActionIdentifier);
+		ArgumentNullException.ThrowIfNull(action);
 
 		action.RunAfter = new Dictionary<string, List<string>>
 		{
-			{ previousActionIdentifier, new List<string> { "Succeeded" } }
+			{ previousActionIdentifier, new List<string> { ActionRunStatus.Succeeded } }
 		};
 
 		_workflowDefinition.Actions ??= new Dictionary<string, WorkflowActionBase>();
