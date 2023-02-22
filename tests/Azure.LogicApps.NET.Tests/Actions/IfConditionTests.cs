@@ -10,9 +10,9 @@ public class IfConditionTests
 	[Fact]
 	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
-		IfCondition ifCondition = new IfCondition
+		IfCondition action = new IfCondition
 		{
-			ActionIdentifier = "SomeCondition",
+			ActionIdentifier = "If_Condition",
 			Actions = new Dictionary<string, WorkflowActionBase>
 			{
 				{ "Set_Variable1", new SetVariable
@@ -60,7 +60,7 @@ public class IfConditionTests
 			}
 		};
 
-		var actualJsonString = ifCondition.ToWorkflowJsonString();
+		var actualJsonString = action.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

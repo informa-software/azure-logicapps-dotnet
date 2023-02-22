@@ -10,7 +10,7 @@ public class InitializeVariableTests
 	[Fact]
 	public void ToWorkflowJsonString_WhenTypeIsString_PopulatesCorrectionJson()
 	{
-		InitializeVariable initializeVariable = new InitializeVariable
+		InitializeVariable action = new InitializeVariable
 		{
 			ActionIdentifier = "Initialize_variable",
 			Inputs = new InitializeVariable.Input
@@ -27,7 +27,7 @@ public class InitializeVariableTests
 			}
 		};
 
-		var actualJsonString = initializeVariable.ToWorkflowJsonString();
+		var actualJsonString = action.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

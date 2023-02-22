@@ -1,9 +1,11 @@
 ﻿namespace Azure.LogicApps.NET.Constants;
 
-public static class ActionType
+internal static class ActionType
 {
-	public const string InitializeVariable = "InitializeVariable";
-	public const string SetVariable = "SetVariable";
-	public const string If = "If";
-	public const string Switch = "Switch";
+	internal const string InitializeVariable = "InitializeVariable";
+	internal const string SetVariable = "SetVariable";
+	internal const string If = "If";
+	internal const string Switch = "Switch";
+	internal const string Until = "Until";
+	internal const string Http = "Http";
 }

@@ -10,7 +10,7 @@ public class SwitchConditionTests
 	[Fact]
 	public void ToWorkflowJsonString_PopulatesCorrectionJson()
 	{
-		SwitchCondition switchCondition = new SwitchCondition
+		SwitchCondition action = new SwitchCondition
 		{
 			ActionIdentifier = "Switch_Condition",
 			Expression = "@variables('name')",
@@ -113,7 +113,7 @@ public class SwitchConditionTests
 			}
 		};
 
-		var actualJsonString = switchCondition.ToWorkflowJsonString();
+		var actualJsonString = action.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =

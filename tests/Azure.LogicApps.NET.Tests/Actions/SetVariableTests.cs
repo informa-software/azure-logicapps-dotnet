@@ -9,7 +9,7 @@ public class SetVariableTests
 	[Fact]
 	public void ToWorkflowJsonString_WhenTypeIsString_PopulatesCorrectionJson()
 	{
-		SetVariable setVariable = new SetVariable
+		SetVariable action = new SetVariable
 		{
 			ActionIdentifier = "Set_Variable1",
 			Inputs = new SetVariable.Variable
@@ -19,7 +19,7 @@ public class SetVariableTests
 			}
 		};
 
-		var actualJsonString = setVariable.ToWorkflowJsonString();
+		var actualJsonString = action.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =
@@ -41,7 +41,7 @@ public class SetVariableTests
 	[Fact]
 	public void ToWorkflowJsonString_WhenTypeIsObject_PopulatesCorrectionJson()
 	{
-		SetVariable setVariable = new SetVariable
+		SetVariable action = new SetVariable
 		{
 			ActionIdentifier = "Set_Variable1",
 			Inputs = new SetVariable.Variable
@@ -55,7 +55,7 @@ public class SetVariableTests
 			}
 		};
 
-		var actualJsonString = setVariable.ToWorkflowJsonString();
+		var actualJsonString = action.ToWorkflowJsonString();
 		var actualJObject = JObject.Parse(actualJsonString);
 
 		string expectedJsonString =
