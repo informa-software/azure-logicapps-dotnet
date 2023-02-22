@@ -128,6 +128,83 @@ public class WorkflowDeserializerTests
                       ]
                     }
                   },
+                  "Switch_Condition1": {
+                    "type": "Switch",
+                    "expression": "@variables(\u0027name\u0027)",
+                    "default": {
+                      "actions": {
+                        "Set_Variable10": {
+                          "type": "SetVariable",
+                          "inputs": {
+                            "name": "name",
+                            "value": "Joe Bloggs"
+                          },
+                          "runAfter": {}
+                        }
+                      }
+                    },
+                    "cases": {
+                      "Case_1": {
+                        "case": "A",
+                        "actions": {
+                          "SomeOtherCondition1": {
+                            "type": "If",
+                            "actions": {
+                              "Set_Variable41": {
+                                "type": "SetVariable",
+                                "inputs": {
+                                  "name": "name",
+                                  "value": "Fred Bloggs"
+                                },
+                                "runAfter": {}
+                              }
+                            },
+                            "else": {
+                              "actions": {
+                                "Set_Variable51": {
+                                  "type": "SetVariable",
+                                  "inputs": {
+                                    "name": "name",
+                                    "value": "Joe Bloggs"
+                                  },
+                                  "runAfter": {}
+                                }
+                              }
+                            },
+                            "expression": {
+                              "and": [
+                                {
+                                  "equals": [
+                                    "@variables(\u0027name\u0027)",
+                                    "hello"
+                                  ]
+                                }
+                              ]
+                            },
+                            "runAfter": {}
+                          }
+                        }
+                      },
+                      "Case_2": {
+                        "case": "B",
+                        "actions": {
+                          "Set_Variable9": {
+                            "type": "SetVariable",
+                            "inputs": {
+                              "name": "name",
+                              "value": "Joe Bloggs"
+                            },
+                            "runAfter": {}
+                          }
+                        }
+                      }
+                    },
+                    "runAfter": {
+                      "SomeCondition": [
+                        "Succeeded"
+                      ]
+                    }
+                  },
                   "Until1": {
                     "type": "Until",
                     "actions": {
@@ -158,7 +235,7 @@ public class WorkflowDeserializerTests
                       "timeout": "PT1H"
                     },
                     "runAfter": {
-                      "SomeCondition": [
+                      "Switch_Condition1": [
                         "Succeeded"
                       ]
                     }
@@ -167,8 +244,7 @@ public class WorkflowDeserializerTests
                 "triggers": {
                   "manual": {
                     "kind": "Http",
-                    "type": "Request",
-                    "inputs": null
+                    "type": "Request"
                   }
                 },
                 "contentVersion": "1.0.0.0",
@@ -179,30 +255,42 @@ public class WorkflowDeserializerTests
             """;
 
 		Workflow workflow = Workflow.FromWorkflowJsonString(jsonString);
-		bool isWorkflowActionIdentifierPopulatedWithCorrectValue = IsWorkflowActionIdentifierPopulatedWithCorrectValue(workflow.Definition.Actions);
+		bool isWorkflowActionIdentifierPopulatedWithCorrectValue = IsWorkflowActionIdentifierPopulatedWithCorrectValue(true, workflow.Definition.Actions);
 		isWorkflowActionIdentifierPopulatedWithCorrectValue.Should().BeTrue();
 	}
 
-	private bool IsWorkflowActionIdentifierPopulatedWithCorrectValue(Dictionary<string, WorkflowActionBase> workflowAction)
+	private bool IsWorkflowActionIdentifierPopulatedWithCorrectValue(bool initialValue, Dictionary<string, WorkflowActionBase> workflowAction)
 	{
 		foreach (KeyValuePair<string, WorkflowActionBase> item in workflowAction)
 		{
 			if (item.Value is IfCondition ifCondition)
 			{
-				return IsWorkflowActionIdentifierPopulatedWithCorrectValue(ifCondition.Actions);
+				initialValue = initialValue
+					&& IsWorkflowActionIdentifierPopulatedWithCorrectValue(initialValue, ifCondition.Actions)
+					&& IsWorkflowActionIdentifierPopulatedWithCorrectValue(initialValue, ifCondition.Else.Actions);
 			}
 
 			if (item.Value is Until untilCondition)
 			{
-				return IsWorkflowActionIdentifierPopulatedWithCorrectValue(untilCondition.Actions);
+				initialValue = initialValue && IsWorkflowActionIdentifierPopulatedWithCorrectValue(initialValue, untilCondition.Actions);
 			}
 
-			if (item.Value.ActionIdentifier != item.Key)
+			if (item.Value is SwitchCondition switchCondition)
 			{
-				return false;
+				foreach (KeyValuePair<string, SwitchCondition.SwitchCaseStatement> @case in switchCondition.Cases)
+				{
+					initialValue = initialValue && IsWorkflowActionIdentifierPopulatedWithCorrectValue(initialValue, @case.Value.Actions);
+				}
+
+				initialValue = initialValue && IsWorkflowActionIdentifierPopulatedWithCorrectValue(initialValue, switchCondition.Default.Actions);
+			}
+
+			if (string.IsNullOrEmpty(item.Value.ActionIdentifier) || item.Value.ActionIdentifier != item.Key)
+			{
+				initialValue = false;
 			}
 		}
 
-		return true;
+		return initialValue;
 	}
 }
