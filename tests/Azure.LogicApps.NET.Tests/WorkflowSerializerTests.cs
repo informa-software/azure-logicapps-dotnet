@@ -11,7 +11,7 @@ namespace Azure.LogicApps.NET.Tests;
 public class WorkflowSerializerTests
 {
 	[Fact]
-	public void ToWorkflowJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectJson()
 	{
 		IfCondition ifCondition = new IfCondition
 		{
@@ -104,7 +104,7 @@ public class WorkflowSerializerTests
 		};
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionBuilder()
-			.WithTrigger(new RequestTrigger())
+			.WithRequestTrigger(new RequestTrigger())
 			.AddAction(new InitializeVariable()
 			{
 				ActionIdentifier = "Initialize_Variable1",
@@ -128,16 +128,16 @@ public class WorkflowSerializerTests
 				{
 					Variables = new List<InitializeVariable.Variable>
 					{
-				new InitializeVariable.Variable
-				{
-					Name = "address",
-					Type = VariableDataType.Object,
-					Value = new
-					{
-						addressLine1 = "Ellerslie",
-						City = "Auckland"
-					}
-				}
+						new InitializeVariable.Variable
+						{
+							Name = "address",
+							Type = VariableDataType.Object,
+							Value = new
+							{
+								addressLine1 = "Ellerslie",
+								City = "Auckland"
+							}
+						}
 					}
 				}
 			})
@@ -354,9 +354,9 @@ public class WorkflowSerializerTests
                   }
                 },
                 "triggers": {
-                  "manual": {
-                    "kind": "Http",
+                  "Manual": {
                     "type": "Request",
+                    "kind": "Http",
                     "inputs": null
                   }
                 },

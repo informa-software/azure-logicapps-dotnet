@@ -13,13 +13,36 @@ public class WorkflowDefinitionBuilder : IWorkflowDefinitionBuilder
 		_workflowDefinition = new WorkflowDefinition();
 	}
 
-	public IWorkflowDefinitionBuilder WithTrigger(WorkflowTriggerBase trigger)
+	public IWorkflowDefinitionBuilder WithRequestTrigger(RequestTrigger trigger)
 	{
 		ArgumentNullException.ThrowIfNull(trigger);
 
-		_workflowDefinition.Triggers = new WorkflowTriggers
+		if (_workflowDefinition.Triggers.Any())
 		{
-			Manual = trigger
+			throw new InvalidOperationException("Workflow can have only one trigger.");
+		}
+
+		_workflowDefinition.Triggers = new Dictionary<string, WorkflowTriggerBase>
+		{
+			{"Manual", trigger }
+		};
+
+		return this;
+	}
+
+	public IWorkflowDefinitionBuilder WithTrigger(string name, WorkflowTriggerBase trigger)
+	{
+		ArgumentException.ThrowIfNullOrEmpty(name);
+		ArgumentNullException.ThrowIfNull(trigger);
+
+		if (_workflowDefinition.Triggers.Any())
+		{
+			throw new InvalidOperationException("Workflow can have only one trigger.");
+		}
+
+		_workflowDefinition.Triggers = new Dictionary<string, WorkflowTriggerBase>
+		{
+			{name, trigger }
 		};
 
 		return this;
