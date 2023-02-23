@@ -4,9 +4,9 @@ namespace Azure.LogicApps.NET.Triggers;
 
 public class RecurrenceTrigger : WorkflowTriggerBase
 {
-    public RecurrenceMethod Recurrence { get; set; }
+	public RecurrenceMethod Recurrence { get; set; }
 
-    public class RecurrenceMethod
+	public class RecurrenceMethod
 	{
 		public string Frequency { get; set; }
 

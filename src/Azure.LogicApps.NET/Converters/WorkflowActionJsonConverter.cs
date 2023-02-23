@@ -44,7 +44,7 @@ public class WorkflowActionJsonConverter : JsonConverterFactory
 								if(propertyInfo.Name == actionIdentifierPropertyName)
 								{
 									propertyInfo.IsRequired = false;
-							}
+								}
 							}
 
 							if (jsonTypeInfo.Type != typeof(WorkflowActionBase))

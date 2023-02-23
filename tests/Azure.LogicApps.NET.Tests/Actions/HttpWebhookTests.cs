@@ -7,7 +7,7 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class HttpWebhookTests
 {
 	[Fact]
-	public void ToWorkflowJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectJson()
 	{
 		HttpWebhook action = new HttpWebhook
 		{
