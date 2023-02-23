@@ -8,4 +8,5 @@ internal static class ActionType
 	internal const string Switch = "Switch";
 	internal const string Until = "Until";
 	internal const string Http = "Http";
+	internal const string HttpWebhook = "HttpWebhook";
 }
