@@ -7,7 +7,7 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class HttpTests
 {
 	[Fact]
-	public void ToWorkflowJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectJson()
 	{
 		Http action = new Http
 		{
@@ -43,7 +43,7 @@ public class HttpTests
 	}
 
 	[Fact]
-	public void ToWorkflowJsonString_WithActiveDirectoryOAuth_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_WithActiveDirectoryOAuth_PopulatesCorrectJson()
 	{
 		Http action = new Http
 		{
@@ -92,7 +92,7 @@ public class HttpTests
 	}
 
 	[Fact]
-	public void ToWorkflowJsonString_WithRawAuth_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_WithRawAuth_PopulatesCorrectJson()
 	{
 		Http action = new Http
 		{
@@ -135,7 +135,7 @@ public class HttpTests
 	}
 
 	[Fact]
-	public void ToWorkflowJsonString_WithCustomHeaders_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_WithCustomHeaders_PopulatesCorrectJson()
 	{
 		Http action = new Http
 		{
@@ -177,7 +177,7 @@ public class HttpTests
 	}
 
 	[Fact]
-	public void ToWorkflowJsonString_WithBody_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_WithBody_PopulatesCorrectJson()
 	{
 		Http action = new Http
 		{

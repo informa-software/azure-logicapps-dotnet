@@ -7,7 +7,7 @@ namespace Azure.LogicApps.NET.Tests;
 public class WorkflowDeserializerTests
 {
 	[Fact]
-	public void FromWorkflowJsonString_PopulatesCorrectionObject()
+	public void FromWorkflowJsonString_PopulatesCorrectObject()
 	{
 		string jsonString =
 			"""
@@ -243,8 +243,8 @@ public class WorkflowDeserializerTests
                 },
                 "triggers": {
                   "manual": {
-                    "kind": "Http",
-                    "type": "Request"
+                    "type": "Request",
+                    "kind": "Http"
                   }
                 },
                 "contentVersion": "1.0.0.0",

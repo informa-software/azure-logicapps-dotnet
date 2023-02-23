@@ -1,5 +1,4 @@
 ﻿using Azure.LogicApps.NET.Base;
-using Azure.LogicApps.NET.Triggers;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -12,7 +11,7 @@ public class WorkflowDefinition
 
 	public Dictionary<string, WorkflowActionBase> Actions { get; set; }
 
-	public WorkflowTriggers Triggers { get; set; }
+	public Dictionary<string, WorkflowTriggerBase> Triggers { get; set; }
 
 	public string ContentVersion { get; set; } = "1.0.0.0";
 

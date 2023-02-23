@@ -20,6 +20,7 @@ public class Workflow : IWorkflowItem<Workflow>
 			Converters =
 			{
 				new JsonStringEnumConverter(),
+				new WorkflowTriggerJsonConverter(),
 				new WorkflowActionsDictionaryJsonConverter()
 			}
 		};
@@ -36,6 +37,7 @@ public class Workflow : IWorkflowItem<Workflow>
 			Converters =
 			{
 				new JsonStringEnumConverter(),
+				new WorkflowTriggerJsonConverter(),
 				new WorkflowActionsDictionaryJsonConverter()
 			},
 		};

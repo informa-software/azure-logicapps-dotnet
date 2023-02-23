@@ -1,12 +1,35 @@
-﻿using Azure.LogicApps.NET.Triggers;
-using System.Text.Json.Serialization;
+﻿using Azure.LogicApps.NET.Converters;
+using System.Text.Json;
 
 namespace Azure.LogicApps.NET.Base;
 
-[JsonDerivedType(typeof(RequestTrigger))]
-public class WorkflowTriggerBase
+public abstract class WorkflowTriggerBase : IWorkflowItem<WorkflowTriggerBase>
 {
-	public string Kind { get; set; }
+	public static WorkflowTriggerBase FromWorkflowJsonString(string jsonString)
+	{
+		JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+		{
+			Converters =
+			{
+				new WorkflowTriggerJsonConverter()
+			}
+		};
 
-	public string Type { get; set; }
+		return JsonSerializer.Deserialize<WorkflowTriggerBase>(jsonString, jsonSerializerOptions);
+	}
+
+	public virtual string ToWorkflowJsonString()
+	{
+		JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+		{
+			WriteIndented = true,
+			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+			Converters =
+			{
+				new WorkflowTriggerJsonConverter()
+			}
+		};
+
+		return JsonSerializer.Serialize(this, jsonSerializerOptions);
+	}
 }

@@ -8,7 +8,7 @@ namespace Azure.LogicApps.NET.Tests.Actions;
 public class SwitchConditionTests
 {
 	[Fact]
-	public void ToWorkflowJsonString_PopulatesCorrectionJson()
+	public void ToWorkflowJsonString_PopulatesCorrectJson()
 	{
 		SwitchCondition action = new SwitchCondition
 		{

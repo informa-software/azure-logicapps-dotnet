@@ -19,9 +19,9 @@ public class HttpWebhook : WorkflowActionBase
 
 		public Uri Uri { get; set; }
 
-        public Dictionary<string, string> Headers { get; set; }
+		public Dictionary<string, string> Headers { get; set; }
 
-        public object Body { get; set; }
+		public object Body { get; set; }
 
 		public object Authentication { get; set; }
 	}
