@@ -17,7 +17,7 @@ public class HttpWebhookTests
 				Subscribe = new HttpWebhook.HttpWebhookSubscription
 				{
 					Method = "POST",
-					Uri = new Uri("http://www.xyz.com"),
+					Uri = "http://www.xyz.com",
 					Body = new
 					{
 						Person = "@variables('person')",
