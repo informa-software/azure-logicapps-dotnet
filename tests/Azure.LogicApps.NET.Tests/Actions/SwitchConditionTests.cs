@@ -2,6 +2,7 @@ using Azure.LogicApps.NET.Actions;
 using Azure.LogicApps.NET.Base;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace Azure.LogicApps.NET.Tests.Actions;
 
@@ -37,18 +38,16 @@ public class SwitchConditionTests
 											}
 										}
 									},
-									Expression = new IfCondition.ConditionExpression
+									Expression = new JsonObject
 									{
-										{ "and", new List<Dictionary<string, List<string>>>
+										["and"] = new JsonArray
+										{
+											new JsonObject
 											{
-												new Dictionary<string, List<string>>
+												[ "equals"] = new JsonArray()
 												{
-													{ "equals", new List<string>
-														{
-															"@variables('name')",
-															"hello"
-														}
-													}
+													"@variables('name')",
+													"hello"
 												}
 											}
 										}

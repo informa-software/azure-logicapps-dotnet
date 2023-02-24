@@ -1,4 +1,5 @@
 ﻿using Azure.LogicApps.NET.Base;
+using System.Text.Json.Nodes;
 
 namespace Azure.LogicApps.NET.Actions;
 
@@ -8,14 +9,10 @@ public class IfCondition : WorkflowActionBase
 
 	public ElseStatement Else { get; set; }
 
-	public ConditionExpression Expression { get; set; }
+	public JsonObject Expression { get; set; }
 
 	public class ElseStatement
 	{
 		public Dictionary<string, WorkflowActionBase> Actions { get; set; }
-	}
-
-	public class ConditionExpression : Dictionary<string, List<Dictionary<string, List<string>>>>
-	{
 	}
 }
