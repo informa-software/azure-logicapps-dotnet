@@ -15,7 +15,7 @@ public class HttpTests
 			Inputs = new Http.HttpInput
 			{
 				Method = "GET",
-				Uri = new Uri("http://www.xyz.com")
+				Uri = "http://www.xyz.com"
 			}
 		};
 
@@ -51,7 +51,7 @@ public class HttpTests
 			Inputs = new Http.HttpInput
 			{
 				Method = "GET",
-				Uri = new Uri("http://www.xyz.com"),
+				Uri = "http://www.xyz.com",
 				Authentication = new Http.ActiveDirectoryOAuthentication
 				{
 					Audience = "SomeAudience",
@@ -100,7 +100,7 @@ public class HttpTests
 			Inputs = new Http.HttpInput
 			{
 				Method = "GET",
-				Uri = new Uri("http://www.xyz.com"),
+				Uri = "http://www.xyz.com",
 				Authentication = new Http.RawAuthentication
 				{
 					Value = "SomeValue"
@@ -143,7 +143,7 @@ public class HttpTests
 			Inputs = new Http.HttpInput
 			{
 				Method = "GET",
-				Uri = new Uri("http://www.xyz.com"),
+				Uri = "http://www.xyz.com",
 				Headers =
 				{
 					{ "X-TenantId", "SomeTenant" }
@@ -185,7 +185,7 @@ public class HttpTests
 			Inputs = new Http.HttpInput
 			{
 				Method = "POST",
-				Uri = new Uri("http://www.xyz.com"),
+				Uri = "http://www.xyz.com",
 				Body = new
 				{
 					FirstName = "John",
