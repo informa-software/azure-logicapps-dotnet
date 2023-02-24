@@ -100,7 +100,8 @@ public class WorkflowSerializerTests
 			}
 		};
 
-		WorkflowDefinition workflowDefinition = new WorkflowDefinitionBuilder()
+		Workflow workflow = new WorkflowBuilder()
+			.WithKind(WorkflowKind.Stateful)
 			.WithRequestTrigger(new RequestTrigger())
 			.AddAction(new InitializeVariable()
 			{
@@ -185,11 +186,6 @@ public class WorkflowSerializerTests
 					Timeout = "PT1H"
 				}
 			})
-			.Build();
-
-		Workflow workflow = new WorkflowBuilder()
-			.WithKind(WorkflowKind.Stateful)
-			.WithDefinition(workflowDefinition)
 			.Build();
 
 		var actualJsonString = workflow.ToWorkflowJsonString();
