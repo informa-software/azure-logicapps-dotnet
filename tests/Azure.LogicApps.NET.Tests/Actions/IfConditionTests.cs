@@ -2,6 +2,7 @@ using Azure.LogicApps.NET.Actions;
 using Azure.LogicApps.NET.Base;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace Azure.LogicApps.NET.Tests.Actions;
 
@@ -26,18 +27,16 @@ public class IfConditionTests
 					}
 				}
 			},
-			Expression = new IfCondition.ConditionExpression
+			Expression = new JsonObject
 			{
-				{ "and", new List<Dictionary<string, List<string>>>
+				["and"] = new JsonArray
+				{ 
+					new JsonObject
 					{
-						new Dictionary<string, List<string>>
+						[ "equals"] = new JsonArray()
 						{
-							{ "equals", new List<string>
-								{
-									"@variables('name')",
-									"hello"
-								}
-							}
+							"@variables('name')",
+							"hello"
 						}
 					}
 				}
@@ -60,11 +59,11 @@ public class IfConditionTests
 			}
 		};
 
-		var actualJsonString = action.ToWorkflowJsonString();
-		var actualJObject = JObject.Parse(actualJsonString);
+var actualJsonString = action.ToWorkflowJsonString();
+var actualJObject = JObject.Parse(actualJsonString);
 
-		string expectedJsonString =
-			"""
+string expectedJsonString =
+	"""
             {
               "type": "If",
               "actions": {
@@ -102,8 +101,8 @@ public class IfConditionTests
               "runAfter": {}
             }
             """;
-		var expectedJObject = JObject.Parse(expectedJsonString);
+var expectedJObject = JObject.Parse(expectedJsonString);
 
-		JToken.DeepEquals(actualJObject, expectedJObject).Should().BeTrue();
+JToken.DeepEquals(actualJObject, expectedJObject).Should().BeTrue();
 	}
 }

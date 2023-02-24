@@ -5,6 +5,7 @@ using Azure.LogicApps.NET.Constants;
 using Azure.LogicApps.NET.Triggers;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace Azure.LogicApps.NET.Tests;
 
@@ -29,18 +30,16 @@ public class WorkflowSerializerTests
 					}
 				}
 			},
-			Expression = new IfCondition.ConditionExpression
+			Expression = new JsonObject
 			{
-				{ "and", new List<Dictionary<string, List<string>>>
+				["and"] = new JsonArray
+				{
+					new JsonObject
 					{
-						new Dictionary<string, List<string>>
+						[ "equals"] = new JsonArray()
 						{
-							{ "equals", new List<string>
-								{
-									"@variables('name')",
-									"hello"
-								}
-							}
+							"@variables('name')",
+							"hello"
 						}
 					}
 				}
@@ -65,18 +64,16 @@ public class WorkflowSerializerTests
 									}
 								}
 							},
-							Expression = new IfCondition.ConditionExpression
+							Expression = new JsonObject
 							{
-								{ "and", new List<Dictionary<string, List<string>>>
+								["and"] = new JsonArray
+								{
+									new JsonObject
 									{
-										new Dictionary<string, List<string>>
+										[ "equals"] = new JsonArray()
 										{
-											{ "equals", new List<string>
-												{
-													"@variables('name')",
-													"hello"
-												}
-											}
+											"@variables('name')",
+											"hello"
 										}
 									}
 								}
